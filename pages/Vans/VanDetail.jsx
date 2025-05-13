@@ -1,12 +1,17 @@
 import React, { useEffect, useState } from 'react'
-import { useParams } from 'react-router-dom'
+import { useParams , Link, useLocation} from 'react-router-dom'
 import axios from 'axios'
 
 const VanDetail = () => {
 
     const [van,setVan] = useState(null)
     const params = useParams()
-    // console.log(params)
+    // console.log("Params goes here",params)
+
+    const location = useLocation()
+    console.log(location)
+
+    
 
     useEffect(() => {
         axios.get(`/api/vans/${params.id}`)
@@ -16,9 +21,17 @@ const VanDetail = () => {
             .catch((err) => console.log(err))
     },[params.id])
 
+    const search = location.state?.search || ""
+    const type = location.state?.type || "all"
+
   return (
     
     <div className="van-detail-container">
+         <Link
+                to={`..${search}`}
+                relative="path"
+                className="back-button"
+            >&larr; <span>Back to {type} Vans</span></Link>
         {
             van ? (
                 <div className="van-detail">
