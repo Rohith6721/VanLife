@@ -1,13 +1,18 @@
 import React, { useEffect, useState } from "react";
-import axios from "axios";
-import { Link, useSearchParams } from "react-router-dom";
+import { Link, useSearchParams, useLoaderData } from "react-router-dom";
 import { getVans } from "../../apis";
+
+export function loader(){
+  return getVans();
+}
 
 export default function Vans() {
   const [vans, setVans] = useState([]);
   const [searchParams, setSearchParams] = useSearchParams();
   const [loading, setLoading] = useState(false);
   const [error,setError] = useState(null)
+  const data = useLoaderData()
+  console.log(data)
 
   const typeFilter = searchParams.get("type");
   console.log("TypeFilter", searchParams);
