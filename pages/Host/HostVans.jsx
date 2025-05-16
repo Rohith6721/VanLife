@@ -1,16 +1,25 @@
 import axios from "axios";
 import React, { useEffect } from "react";
-import { Link } from "react-router-dom";
+import { Link, useLoaderData } from "react-router-dom";
+import { getHostVans } from "../../apis";
+import { requireAuth } from "../../utils";
+
+export async function loader(){
+    await requireAuth()
+    return getHostVans();
+}
 
 export default function HostVans() {
-  const [vans, setVans] = React.useState([]);
+  // const [vans, setVans] = React.useState([]);
+  const vans = useLoaderData()
+  console.log(vans)
   
-  useEffect(() => {
-    axios
-      .get("/api/host/vans")
-      .then((res) => setVans(res.data.vans))
-      .catch((err) => console.log(err));
-  }, []);
+  // useEffect(() => {
+  //   axios
+  //     .get("/api/host/vans")
+  //     .then((res) => setVans(res.data.vans))
+  //     .catch((err) => console.log(err));
+  // }, []);
 
   const hostVansEls = vans.map((van) => (
     <Link

@@ -1,10 +1,21 @@
 import axios from "axios";
 import React, { useEffect, useState } from "react";
-import { useParams, Link, Outlet, NavLink } from "react-router-dom";
+import { useParams, Link, Outlet, NavLink, useLoaderData } from "react-router-dom";
+import { getHostVans } from "../../apis";
+import { requireAuth } from "../../utils";
+
+export async function loader({params}){
+    await requireAuth()
+    return getHostVans(params.id)
+}
 
 const HostVanDetail = () => {
-  const [currentVan, setCurrentVan] = useState(null);
-  const { id } = useParams();
+  // const [currentVan, setCurrentVan] = useState(null);
+  // const { id } = useParams();
+
+  const currentVan = useLoaderData()
+
+
 
   const activeStyles = {
     fontWeight: "bold",
@@ -12,15 +23,15 @@ const HostVanDetail = () => {
     color: "#161616",
   };
 
-  useEffect(() => {
-    axios
-      .get(`/api/host/vans/${id}`)
-      .then((res) => {
-        setCurrentVan(res.data.vans);
-        console.log(res.data.vans);
-      })
-      .catch((err) => console.log(err));
-  }, []);
+  // useEffect(() => {
+  //   axios
+  //     .get(`/api/host/vans/${id}`)
+  //     .then((res) => {
+  //       setCurrentVan(res.data.vans);
+  //       console.log(res.data.vans);
+  //     })
+  //     .catch((err) => console.log(err));
+  // }, []);
 
   if (!currentVan) {
     return <h1>Loading...</h1>;

@@ -1,25 +1,31 @@
 import React, { useEffect, useState } from 'react'
-import { useParams , Link, useLocation} from 'react-router-dom'
+import { useParams , Link, useLocation, useLoaderData} from 'react-router-dom'
 import axios from 'axios'
+import { getVans } from '../../apis'
+
+export function loader({ params }){
+    console.log("params",params)
+    return getVans(params.id)
+}
 
 const VanDetail = () => {
 
-    const [van,setVan] = useState(null)
-    const params = useParams()
+    // const [van,setVan] = useState(null)
+    // const params = useParams()
     // console.log("Params goes here",params)
-
+    const van = useLoaderData()
     const location = useLocation()
-    console.log(location)
+    // console.log(location)
 
     
 
-    useEffect(() => {
-        axios.get(`/api/vans/${params.id}`)
-            .then((res) => {
-                 console.log(res.data)
-                 setVan(res.data.vans) }) 
-            .catch((err) => console.log(err))
-    },[params.id])
+    // useEffect(() => {
+    //     axios.get(`/api/vans/${params.id}`)
+    //         .then((res) => {
+    //              console.log(res.data)
+    //              setVan(res.data.vans) }) 
+    //         .catch((err) => console.log(err))
+    // },[params.id])
 
     const search = location.state?.search || ""
     const type = location.state?.type || "all"
