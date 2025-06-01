@@ -2,6 +2,9 @@
 
 Warning: Vite enforces using jsx syntax inside jsx/tsx files, so it will complain about that. Solution: rename `.js` files to `.jsx` :)
 
+# Demo
+[Click here for demo](https://van-life-tour.vercel.app/)
+
 Quick start:
 
 ```
